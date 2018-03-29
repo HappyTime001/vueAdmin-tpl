@@ -44,6 +44,21 @@ export const constantRouterMap = [
     name: 'Example',
     meta: { title: '示例', icon: 'fa-envelope-open-o' },
     children: [
+      { path: 'newMovie', 
+        name: '热映电影',
+        component: () => import('@/views/movie/newMovie'),
+        meta: { title: '热映电影', icon: 'fa-envelope-open-o' }
+      },
+      { path: 'movieSearch', 
+        name: '电影搜索',
+        component: () => import('@/views/movie/movieSearch'),
+        meta: { title: '电影搜索', icon: 'fa-envelope-open-o' }
+      },
+      { path: 'form', 
+        component: () => import('@/views/form/form2'),
+        name: 'form',
+        meta: { title: 'form表单编辑', icon: 'fa-envelope-open-o' }
+      },
       {
         path: 'table',
         name: 'Table',
