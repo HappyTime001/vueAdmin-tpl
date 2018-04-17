@@ -59,18 +59,18 @@ export const constantRouterMap = [
         name: 'form',
         meta: { title: 'form表单编辑', icon: 'fa-envelope-open-o' }
       },
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: '表格', icon: 'fa-envelope-open-o' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '树', icon: 'fa-envelope-open-o' }
-      }
+      // {
+      //   path: 'table',
+      //   name: 'Table',
+      //   component: () => import('@/views/table/index'),
+      //   meta: { title: '表格', icon: 'fa-envelope-open-o' }
+      // },
+      // {
+      //   path: 'tree',
+      //   name: 'Tree',
+      //   component: () => import('@/views/tree/index'),
+      //   meta: { title: '树', icon: 'fa-envelope-open-o' }
+      // }
     ]
   },
 
