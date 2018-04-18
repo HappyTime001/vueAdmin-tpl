@@ -1,5 +1,5 @@
 /**
- * Created by jiachenpan on 16/11/18.
+ * 正则验证
  */
 
 export function isvalidUsername(str) {

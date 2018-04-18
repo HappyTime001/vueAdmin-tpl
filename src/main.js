@@ -4,7 +4,7 @@ import 'normalize.css/normalize.css'// A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale/lang/zh-CN'
 
 import '@/styles/index.scss' // global css
 
@@ -13,7 +13,7 @@ import router from './router'
 import store from './store'
 
 import * as filters from './filters' // 全局vue filter
-import '@/icons' // icon
+
 import '@/permission' // permission control
 
 import global from '@/global/global'
@@ -22,7 +22,7 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
-// register global utility filters.
+// 全局过滤器
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })

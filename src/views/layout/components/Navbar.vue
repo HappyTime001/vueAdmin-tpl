@@ -1,26 +1,24 @@
 <template>
   <div class="">
     <el-menu class="navbar" mode="horizontal">
-      <!-- <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger> -->
+      <img :src="logo" alt="" class="index_logo">
       <i class="fa fa-bars" @click="toggleSideBar" :isActive="sidebar.opened"></i>
+      <div class="fl">
+        广东开心代账管理有限公司
+      </div>
 
-      <breadcrumb></breadcrumb>
-      <!-- <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
-          <i class="el-icon-caret-bottom"></i>
-        </div>
-        <el-dropdown-menu class="user-dropdown" slot="dropdown">
-          <router-link class="inlineBlock" to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided>
-            <span @click="logout" style="display:block;">LogOut</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown> -->
+      <div class="fl index_date">
+           
+        <el-date-picker
+          v-model="indexDate"
+          type="month"
+          placeholder="选择月">
+        </el-date-picker>
+        
+      </div>
+
+      <!-- <breadcrumb></breadcrumb> -->
+      
       <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
               <span class="user-name">{{userInfo.nickname}}</span>
@@ -108,6 +106,8 @@ import Hamburger from '@/components/Hamburger'
 import md5 from 'blueimp-md5'
 import global from '@/global/global'
 
+import Logo from '@/assets/img/logo-qtsf-csgj.png'
+
 export default {
   data() {
     const validateOldPassword = (rule, value, callback) => {
@@ -127,6 +127,8 @@ export default {
     };
 
     return {
+      logo: Logo,
+      indexDate: '',
       userInfo: {
         nickname: '张三',
         avatar: null,
@@ -207,13 +209,22 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-
+.index_logo{
+  float: left;
+  margin: 10px 0 0 25px;
+  height: 40px;
+}
 .fa-bars{
+    float: left;
     cursor: pointer;
     line-height: 50px;
     height: 50px;
-    float: left;
+   
     padding: 0 15px;
+    margin-top: 5px;
+}
+.index_date{
+  margin-left: 100px;
 }
 /*.hideSidebar .fa-bars{
     display: none;
@@ -223,12 +234,12 @@ export default {
 }
 
 .navbar {
-  height: 50px;
-  line-height: 50px;
+  height: 60px;
+  line-height: 60px;
   border-radius: 0px !important;
   .hamburger-container {
-    line-height: 58px;
-    height: 50px;
+    /*line-height: 58px;
+    height: 50px;*/
     float: left;
     padding: 0 10px;
   }
@@ -239,13 +250,13 @@ export default {
     color: red;
   }
   .avatar-container {
-    height: 50px;
+    float: right;
+    height: 60px;
     display: inline-block;
     position: absolute;
     right: 35px;
     .avatar-wrapper {
       cursor: pointer;
-      margin-top: 5px;
       position: relative;
       .user-name{
         float: left;
@@ -254,7 +265,8 @@ export default {
       .user-avatar {
         width: 40px;
         height: 40px;
-        border-radius: 10px;
+        border-radius: 50%;
+        margin-top: 10px;
       }
       .el-icon-caret-bottom {
         position: absolute;

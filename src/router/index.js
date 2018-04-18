@@ -26,23 +26,45 @@ export const constantRouterMap = [
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
   {
-    path: '/',
+    path: '',
     component: Layout,
-    redirect: '/dashboard',
-    name: 'Dashboard',
-    hidden: true,
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
-    }]
+    redirect: '/index',
+    children: [
+      {
+        path: 'index',
+        name: '',
+        component: () => import('@/views/index/index'),
+        meta: { title: '首页', icon: 'fas fa-home fa-lg' }
+      }
+    ]
   },
 
+  {
+    path: '/setting',
+    component: Layout,
+    redirect: '/setting/table',
+    name: '',
+    meta: { title: '设置', icon: 'fas fa-home fa-lg' },
+    children: [
+      { path: 'setAccounts', 
+        name: '建账导账',
+        //component: () => import('@/views/'),
+        meta: { title: '建账导账', icon: 'fa-envelope-open-o' }
+      },
+      { path: 'others', 
+        name: '其他页面',
+        //component: () => import('@/views/'),
+        meta: { title: '其他页面', icon: 'fa-envelope-open-o' }
+      },
+      
+    ]
+  },
   {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: '示例', icon: 'fa-envelope-open-o' },
+    meta: { title: '示例', icon: 'fas fa-home fa-lg' },
     children: [
       { path: 'newMovie', 
         name: '热映电影',
@@ -59,33 +81,22 @@ export const constantRouterMap = [
         name: 'form',
         meta: { title: 'form表单编辑', icon: 'fa-envelope-open-o' }
       },
-      // {
-      //   path: 'table',
-      //   name: 'Table',
-      //   component: () => import('@/views/table/index'),
-      //   meta: { title: '表格', icon: 'fa-envelope-open-o' }
-      // },
-      // {
-      //   path: 'tree',
-      //   name: 'Tree',
-      //   component: () => import('@/views/tree/index'),
-      //   meta: { title: '树', icon: 'fa-envelope-open-o' }
-      // }
+      
     ]
   },
 
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: '表单', icon: 'fa-envelope-open-o' }
-      }
-    ]
-  },
+  // {
+  //   path: '/form',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Form',
+  //       component: () => import('@/views/form/index'),
+  //       meta: { title: '表单', icon: 'fa-envelope-open-o' }
+  //     }
+  //   ]
+  // },
 
   { path: '*', redirect: '/404', hidden: true }
 ]
