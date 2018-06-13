@@ -99,183 +99,190 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+  import { mapGetters } from 'vuex'
+  import Breadcrumb from '@/components/Breadcrumb'
+  import Hamburger from '@/components/Hamburger'
 
-import md5 from 'blueimp-md5'
-import global from '@/global/global'
+  import md5 from 'blueimp-md5'
+  import global from '@/global/global'
 
-import Logo from '@/assets/img/logo-qtsf-csgj.png'
+  import Logo from '@/assets/img/logo-qtsf-csgj.png'
 
-export default {
-  data() {
-    const validateOldPassword = (rule, value, callback) => {
-        if ( md5('@lss'+value) !== md5('@lss123456') ) { 
-              callback(new Error('旧密码不正确！'));
-        } else {
-            
-            callback();
-        }
-    };
-    const validateNewPassword2 = (rule, value, callback) => {
-            if (value !== this.passwordForm.newPassword) {
-              callback(new Error('两次输入密码不一致!'));
-            } else {
+  export default {
+    data() {
+      const validateOldPassword = (rule, value, callback) => {
+          if ( md5('@lss'+value) !== md5('@lss123456') ) { 
+                callback(new Error('旧密码不正确！'));
+          } else {
+              
               callback();
-            }
-    };
+          }
+      };
+      const validateNewPassword2 = (rule, value, callback) => {
+              if (value !== this.passwordForm.newPassword) {
+                callback(new Error('两次输入密码不一致!'));
+              } else {
+                callback();
+              }
+      };
 
-    return {
-      logo: Logo,
-      indexDate: '',
-      userInfo: {
-        nickname: '张三',
-        avatar: null,
-      },
-      dialogVisible:false,
-      dialogFormVisible:false,
-      themeValue: localStorage.getItem("themeValue") ? localStorage.getItem("themeValue") : 'blue',
-      passwordForm: {
-          "oldPassword":'',
-          "newPassword":'',
-          "newPassword2":'',
-      },
-      passwordFormRules: {
-          oldPassword: [
-              { required: true, trigger: 'blur', message: '旧密码不能为空！'},
-              { required: true, trigger: 'blur' , validator: validateOldPassword}
-             
-          ],
-          newPassword: [
-              { required: true, trigger: 'blur', message: '新密码不能为空！'},
-          ],
-          newPassword2: [
-              { required: true, trigger: 'blur', message: '重复密码不能为空！'},
-              { required: true, trigger: 'blur' , validator: validateNewPassword2}
-          ]
-      },
-    }
-  },
-  components: {
-    Breadcrumb,
-    Hamburger
-  },
-  computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar',
-      // 'userInfo' 稍后补上
-    ])
-  },
-  methods: {
-    //换肤
-    handleChangeTheme(){
-        var vm = this;
-        global.changeTheme(vm.themeValue);
+      return {
+        logo: Logo,
+        indexDate: '',
+        userInfo: {
+          nickname: '张三',
+          avatar: null,
+        },
+        dialogVisible:false,
+        dialogFormVisible:false,
+        themeValue: localStorage.getItem("themeValue") ? localStorage.getItem("themeValue") : 'blue',
+        passwordForm: {
+            "oldPassword":'',
+            "newPassword":'',
+            "newPassword2":'',
+        },
+        passwordFormRules: {
+            oldPassword: [
+                { required: true, trigger: 'blur', message: '旧密码不能为空！'},
+                { required: true, trigger: 'blur' , validator: validateOldPassword}
+               
+            ],
+            newPassword: [
+                { required: true, trigger: 'blur', message: '新密码不能为空！'},
+            ],
+            newPassword2: [
+                { required: true, trigger: 'blur', message: '重复密码不能为空！'},
+                { required: true, trigger: 'blur' , validator: validateNewPassword2}
+            ]
+        },
+      }
+    },
+    components: {
+      Breadcrumb,
+      Hamburger
+    },
+    computed: {
+      ...mapGetters([
+        'sidebar',
+        'avatar',
+        // 'userInfo' 稍后补上
+      ])
+    },
+    methods: {
+      //换肤
+      handleChangeTheme(){
+          var vm = this;
+          global.changeTheme(vm.themeValue);
 
-        this.dialogVisible = false;
-    },
-    //密码修改
-    handlePwdModifySubmit(formName){
-        var vm = this;
-        console.log('---',this.passwordForm)
-        vm.$refs.passwordForm.validate(valid => {
-            if (valid) {
-                alert('恭喜:旧密码验证成功!')
-                var par = {
-                        "oldPassword": md5('@lss123456'),
-                        "newPassword": md5('@lss' + vm.passwordForm.newPassword),
-                        "newPassword2": md5('@lss' + vm.passwordForm.newPassword2),
-                }
-                console.log('密码修改入参为：',par)
-                vm.dialogFormVisible = false;
-            } else {
-              console.log('error submit!!');
-              return false;
-            }
-        });
-    },
-    toggleSideBar() {
-      this.$store.dispatch('ToggleSideBar')
-    },
-    logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
+          this.dialogVisible = false;
+      },
+      //密码修改
+      handlePwdModifySubmit(formName){
+          var vm = this;
+          console.log('---',this.passwordForm)
+          vm.$refs.passwordForm.validate(valid => {
+              if (valid) {
+                  alert('恭喜:旧密码验证成功!')
+                  var par = {
+                          "oldPassword": md5('@lss123456'),
+                          "newPassword": md5('@lss' + vm.passwordForm.newPassword),
+                          "newPassword2": md5('@lss' + vm.passwordForm.newPassword2),
+                  }
+                  console.log('密码修改入参为：',par)
+                  vm.dialogFormVisible = false;
+              } else {
+                console.log('error submit!!');
+                return false;
+              }
+          });
+      },
+      toggleSideBar() {
+        this.$store.dispatch('ToggleSideBar')
+      },
+      logout() {
+        this.$store.dispatch('LogOut').then(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        })
+      }
     }
   }
-}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.index_logo{
-  float: left;
-  margin: 10px 0 0 25px;
-  height: 40px;
-}
-.fa-bars{
+ 
+  .index_logo{
     float: left;
-    cursor: pointer;
-    line-height: 50px;
-    height: 50px;
-   
-    padding: 0 15px;
-    margin-top: 5px;
-}
-.index_date{
-  margin-left: 100px;
-}
-/*.hideSidebar .fa-bars{
-    display: none;
-}*/
-.fa-bars[isactive] {
-    transform: rotate(90deg);
-}
-
-.navbar {
-  height: 60px;
-  line-height: 60px;
-  border-radius: 0px !important;
-  .hamburger-container {
-    /*line-height: 58px;
-    height: 50px;*/
-    float: left;
-    padding: 0 10px;
+    margin: 10px 0 0 25px;
+    height: 40px;
   }
-  .screenfull {
-    position: absolute;
-    right: 90px;
-    top: 16px;
-    color: red;
-  }
-  .avatar-container {
-    float: right;
-    height: 60px;
-    display: inline-block;
-    position: absolute;
-    right: 35px;
-    .avatar-wrapper {
+  .fa-bars{
+      float: left;
       cursor: pointer;
-      position: relative;
-      .user-name{
-        float: left;
-        margin-right: 5px;
-      }
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-top: 10px;
-      }
-      .el-icon-caret-bottom {
-        position: absolute;
-        right: -20px;
-        top: 25px;
-        font-size: 12px;
+      line-height: 50px;
+      height: 50px;
+     
+      padding: 0 15px;
+      margin-top: 5px;
+  }
+  .index_date{
+    margin-left: 100px;
+  }
+  /*.hideSidebar .fa-bars{
+      display: none;
+  }*/
+  .fa-bars[isactive] {
+      transform: rotate(90deg);
+  }
+
+  .navbar {
+    height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    .hamburger-container {
+      /*line-height: 58px;
+      height: 50px;*/
+      float: left;
+      padding: 0 10px;
+    }
+    .screenfull {
+      position: absolute;
+      right: 90px;
+      top: 16px;
+      color: red;
+    }
+    .avatar-container {
+      float: right;
+      height: 60px;
+      display: inline-block;
+      position: absolute;
+      right: 35px;
+      .avatar-wrapper {
+        cursor: pointer;
+        position: relative;
+        .user-name{
+          float: left;
+          margin-right: 5px;
+        }
+        .user-avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-top: 10px;
+        }
+        .el-icon-caret-bottom {
+          position: absolute;
+          right: -20px;
+          top: 25px;
+          font-size: 12px;
+        }
       }
     }
   }
-}
 </style>
 
