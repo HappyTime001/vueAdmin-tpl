@@ -89,7 +89,8 @@ const global = {
         if(isLoading){
             var loadingInstance = Loading.service({text:"拼命加载中"});
         }
-        axios.get(url, options).then((response) => {
+        axios.get(url, options)
+        .then((response) => {
             // 响应成功回调
             //console.log('成功回调')
             setTimeout(function(){
@@ -99,16 +100,15 @@ const global = {
                 }
                 
             },1000)
-               
-            
-        }, (response) => {
+        })
+        .catch(error) => {
             // 响应错误回调
             //console.log('失败回调')
-            errorCb(response);
+            errorCb(error);
             if(isLoading){
                loadingInstance.close();
             }
-        })
+        }
     },
 
     /**
@@ -134,7 +134,8 @@ const global = {
         if(isLoading){
             var loadingInstance = Loading.service();
         }
-        Vue.http.post(url,body,options).then((response) => {
+        axios.post(url,body,options)
+        .then((response) => {
             // 响应成功回调
             //console.log('成功回调')
             sucCb(response);
@@ -142,10 +143,11 @@ const global = {
                loadingInstance.close();
             }
              
-        }, (response) => {
+        })
+        .catch(error) => {
             // 响应错误回调
             //console.log('失败回调')
-            errorCb(response);
+            errorCb(error);
             if(isLoading){
                loadingInstance.close();
             }
