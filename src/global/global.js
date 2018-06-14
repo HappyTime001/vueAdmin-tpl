@@ -14,8 +14,8 @@ import themeArray from './themeArray';
 
 import axios from 'axios'
 
-/*axios.defaults.baseURL = process.env.BASE_API;
-axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+axios.defaults.baseURL = process.env.BASE_API;
+/*axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.timeout = 2500;
 */
