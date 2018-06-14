@@ -1,3 +1,5 @@
+//封装一些全局元素。如全站通用功能函数和http请求等
+
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
@@ -9,17 +11,28 @@ import Cookies from 'js-cookie';
 import config from '../../config';
 // const themeArray = require('./themeArray');
 import themeArray from './themeArray';
-//封装一些全局元素。如全站通用功能函数和http请求等
+
+import axios from 'axios'
+
+/*axios.defaults.baseURL = process.env.BASE_API;
+axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.timeout = 2500;
+*/
 
 const global = {
+    //一些固定写死在前端的常量（比如科目、代号等）分开文件存放最后导入global进行合并
+
     // 测试环境
     // baseUrl:"http://120.76.119.16:8888/jojosns/",
     // baseImgUrl:"http://120.76.119.16:8888/jojosns/",
     // 开发环境
-    baseUrl: "http://27.61.80.50:8080/jojosns/",
-    baseImgUrl: "http://27.61.80.50:8080/jojosns/", //图片服务器，若没有单独服务，可忽略此项
+    // baseUrl: "http://27.61.80.50:8080/jojosns/",
+    // baseImgUrl: "http://27.61.80.50:8080/jojosns/", //图片服务器，若没有单独服务，可忽略此项
 
     staticPath: process.env.NODE_ENV !== 'development' ?  config.build.staticPath: config.dev.staticPath,//静态资源路径
+
+    baseURL: process.env.BASE_API,  //统一接口前缀
     /**
      * 切换主题函数
      */
@@ -61,10 +74,10 @@ const global = {
      * @param sucCb { Function } -必选 成功回调
      * @param errorCb { Function } -可选 失败回调
      * @param isLoading { Boolean } -可选 是否显示加载状态
-     * @param isLogin { Boolean } -可选 是否登陆信息（移动端使用得较多，设置头部信息）
+     * @param isLogin { Boolean } -可选 是否登陆信息（移动端使用得较多，部分接口需要登录，未登录直接跳转登录页）
      */
     get:function( url,options = {},sucCb,errorCb,isLoading = true,isLogin ){
-        
+        let vm = this;
         if(!url){
             console.log('接口url不能为空！');
             return false ;
@@ -76,11 +89,9 @@ const global = {
         if(isLoading){
             var loadingInstance = Loading.service({text:"拼命加载中"});
         }
-        Vue.http.get(url, options).then((response) => {
+        axios.get(url, options).then((response) => {
             // 响应成功回调
             //console.log('成功回调')
-            
-            
             setTimeout(function(){
                 sucCb(response);
                 if(isLoading){
@@ -108,9 +119,10 @@ const global = {
      * @param sucCb { Function } -必选 成功回调
      * @param errorCb { Function } -可选 失败回调
      * @param isLoading { Boolean } -可选 是否显示加载状态
-     * @param isLogin { Boolean } -可选 是否登陆信息（移动端使用得较多，设置头部信息）
+     * @param isLogin { Boolean } -可选 是否登陆信息（移动端使用得较多，部分接口需要登录，未登录直接跳转登录页）
      */
     post:function( url,body,options,sucCb,errorCb,isLoading = true,isLogin ){
+        let vm = this;
         if(!url){
             console.log('接口url不能为空！');
             return false ;
@@ -140,60 +152,8 @@ const global = {
         })
     },
 
-   
-    
     /**
-     * author lss
-     * 日期格式化,传入为毫秒数,转出时间格式为 ：2016-6-6 12:00:00
-     * @objD 必填，格式为毫秒数
-     */
-    formatDate: function (objD) {
-        if (!objD) {
-            return '';
-        }
-
-        objD = new Date(objD);
-        var str;
-        var yy = objD.getYear();
-        if (yy < 1900) yy = yy + 1900;
-        var MM = objD.getMonth() + 1;
-        if (MM < 10) MM = '0' + MM;
-        var dd = objD.getDate();
-        if (dd < 10) dd = '0' + dd;
-        var hh = objD.getHours();
-        if (hh < 10) hh = '0' + hh;
-        var mm = objD.getMinutes();
-        if (mm < 10) mm = '0' + mm;
-        var ss = objD.getSeconds();
-        if (ss < 10) ss = '0' + ss;
-        str = yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss;
-        return (str);
-    },
-    /**
-     * author lss
-     * 日期格式化,传入为毫秒数,转出时间格式为 ：2016-6-6
-     * @objD 必填，格式为毫秒数
-     */
-    formatDate2: function (objD) {
-        if (!objD) {
-            return '';
-        }
-        objD = new Date(objD);
-        var str;
-        var yy = objD.getYear();
-        if (yy < 1900) yy = yy + 1900;
-        var MM = objD.getMonth() + 1;
-        //if(MM<10) MM = '0' + MM;
-        var dd = objD.getDate();
-        //if(dd<10) dd = '0' + dd;
-        //去掉0 我的圈子 加入圈子，布局放不下。。
-        str = yy + "-" + MM + "-" + dd;
-        return (str);
-    },
-	
-    
-    /**
-     * 获取url参数
+     * 获取url参数。recharge.html?mid=&version=7701&from=music
      */
     getUrlFn: function () {
         var querystr = window.location.href.split("?"),
@@ -225,5 +185,6 @@ const global = {
     
 };
     
+// Object.assign(target, source)
 
 export default global

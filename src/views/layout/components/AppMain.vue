@@ -17,3 +17,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .app-main{
+    margin-top: 70px;
+  }
+
+</style>
