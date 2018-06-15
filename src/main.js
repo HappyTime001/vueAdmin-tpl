@@ -16,9 +16,11 @@ import * as filters from './filters' // 全局vue filter
 
 import '@/permission' // permission control
 
+import vueWaves from './directive/waves';// 水波纹指令
 import global from '@/global/global'
 
 Vue.use(ElementUI, { locale })
+Vue.use(vueWaves);
 
 Vue.config.productionTip = false
 

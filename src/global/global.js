@@ -101,14 +101,14 @@ const global = {
                 
             },1000)
         })
-        .catch(error) => {
+        .catch((error) => {
             // 响应错误回调
             //console.log('失败回调')
             errorCb(error);
             if(isLoading){
                loadingInstance.close();
             }
-        }
+        })
     },
 
     /**
@@ -144,7 +144,7 @@ const global = {
             }
              
         })
-        .catch(error) => {
+        .catch((error) => {
             // 响应错误回调
             //console.log('失败回调')
             errorCb(error);
